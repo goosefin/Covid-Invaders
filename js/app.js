@@ -57,20 +57,69 @@ const gamePage = () => {
     let player2Name = document.createElement('p')
     player2Name.innerText = 'Player 2: Name'
     gameDiv.appendChild(player2Name)
+    let gameScreen = document.createElement('div')
+    gameScreen.setAttribute('id', 'game-screen')
+    document.body.appendChild(gameScreen)
     let background = document.createElement('img')
     background.setAttribute('src','https://i.imgur.com/Yn7VME9.gif')
     background.setAttribute('id','background')
-    document.body.appendChild(background)
+    gameScreen.appendChild(background)
     let player1Icon = document.createElement('img')
     let player2Icon = document.createElement('img')
     player1Icon.setAttribute('src','https://i.imgur.com/7JYiWHR.png')
     player1Icon.setAttribute('id','player-1-icon')
-    document.body.appendChild(player1Icon)
+    gameScreen.appendChild(player1Icon)
     player2Icon.setAttribute('src','https://i.imgur.com/hccAmLb.png')
     player2Icon.setAttribute('id','player-2-icon')
-    document.body.appendChild(player2Icon)
+    gameScreen.appendChild(player2Icon)
 }
 
+const player1KeyCodes =['ArrowLeft', 'ArrowRight','ShiftRight']
+const player2KeyCodes =['KeyA', 'KeyD','ShiftLeft']
+
+class Hero {
+    constructor(playerName){
+        this.score = 0
+        this.playerName = playerName
+    }
+    moveLeft(){
+
+    }
+    moveRight(){
+
+    }
+    shoot(){
+        
+    }
+}
+
+class Enemy {
+    constructor(){
+        this.points = [1,5,10]
+    }
+    move(){
+
+    }
+}
+
+const aTest = () => {
+    console.log('A Key Test')
+}
+const dTest = () => {
+    console.log('D Key Test')
+}
+const leftShiftTest = () => {
+    console.log('Left Shift Key Test')
+}
+const leftArrowTest = () => {
+    console.log('Left Arrow Key Test')
+}
+const rightArrowTest = () => {
+    console.log('Right Arrow Key Test')
+}
+const rightShiftTest = () => {
+    console.log('Right Shift Key Test')
+}
 
 //EVENT LISTENERS
 document.querySelector('#start-button').addEventListener('click',landingPageRemoval)
@@ -84,5 +133,27 @@ document.querySelector('#player-info').addEventListener('click',function(e){
 document.querySelector('#instructions').addEventListener('click',function(e){
     if(e.target && e.target.id == 'enter-button'){
         gamePage()
+    }
+})
+
+//keyboard event listener
+window.addEventListener('keydown', function(e){
+    if(e.code == 'KeyA'){
+        aTest()
+    }
+    if(e.code == 'KeyD'){
+        dTest()
+    }
+    if(e.code == 'ShiftLeft'){
+        leftShiftTest()
+    }
+    if(e.code == 'ArrowLeft'){
+        leftArrowTest()
+    }
+    if(e.code == 'ArrowRight'){
+        rightArrowTest()
+    }
+    if(e.code == 'ShiftRight'){
+        rightShiftTest()
     }
 })

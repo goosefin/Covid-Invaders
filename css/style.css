@@ -79,10 +79,16 @@ input{
 #player-1-icon{
     width:100px;
     position: absolute;
+    right: 300px;
 }
 
 #player-2-icon{
     width:100px;
     position: absolute;
-    top: 200px;
+    left: 300px;
+}
+
+#game-screen{
+    display: flex;
+    align-items: flex-end
 }
