@@ -1,10 +1,10 @@
-//landing page is removed
+//LANDING PAGE IS REMOVED
 const landingPageRemoval = () => {
     let startPage = document.querySelector('#start-page')
     startPage.remove()
 }
 
-//player input page
+//PLAYER INPUT PAGE IS CREATED
 const playerInputPage = () => {
     let parentDiv = document.querySelector('#player-info')
     let player1 = document.createElement('p')
@@ -27,6 +27,7 @@ const playerInputPage = () => {
     // const player2Name = document.getElementById('player-two-name').value
 }
 
+//PLAYER PAGE IS REMOVED AND INSTRUCTIONS PAGE IS CREATED
 const instructionsPage = () => {
     let parentDiv = document.querySelector('#player-info')
     parentDiv.remove()
@@ -43,11 +44,45 @@ const instructionsPage = () => {
     button.innerText = 'ENTER'
 }
 
-//event listeners
+const gamePage = () => {
+    let instructions = document.querySelector('#instructions')
+    instructions.remove()
+    let gameDiv = document.querySelector('#game-play')
+    let player1Name = document.createElement('p')
+    player1Name.innerText = 'Player 1: Name'
+    gameDiv.appendChild(player1Name)
+    let timer = document.createElement('p')
+    timer.innerText = 'Timer'
+    gameDiv.appendChild(timer)
+    let player2Name = document.createElement('p')
+    player2Name.innerText = 'Player 2: Name'
+    gameDiv.appendChild(player2Name)
+    let background = document.createElement('img')
+    background.setAttribute('src','https://i.imgur.com/Yn7VME9.gif')
+    background.setAttribute('id','background')
+    document.body.appendChild(background)
+    let player1Icon = document.createElement('img')
+    let player2Icon = document.createElement('img')
+    player1Icon.setAttribute('src','https://i.imgur.com/7JYiWHR.png')
+    player1Icon.setAttribute('id','player-1-icon')
+    document.body.appendChild(player1Icon)
+    player2Icon.setAttribute('src','https://i.imgur.com/hccAmLb.png')
+    player2Icon.setAttribute('id','player-2-icon')
+    document.body.appendChild(player2Icon)
+}
+
+
+//EVENT LISTENERS
 document.querySelector('#start-button').addEventListener('click',landingPageRemoval)
 document.querySelector('#start-button').addEventListener('click',playerInputPage)
+//the element was created dynamically so I had to use event delegation
 document.querySelector('#player-info').addEventListener('click',function(e){
     if(e.target && e.target.id == 'game-button'){
         instructionsPage()
+    }
+})
+document.querySelector('#instructions').addEventListener('click',function(e){
+    if(e.target && e.target.id == 'enter-button'){
+        gamePage()
     }
 })

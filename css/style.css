@@ -63,3 +63,26 @@ input{
     background-color: white;
     color: green;
 }
+
+#game-play{
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Nosifer', cursive;
+    font-size: 25px;
+}
+
+#background {
+    width: 1100px;
+    padding-left: 160px;
+}
+
+#player-1-icon{
+    width:100px;
+    position: absolute;
+}
+
+#player-2-icon{
+    width:100px;
+    position: absolute;
+    top: 200px;
+}
