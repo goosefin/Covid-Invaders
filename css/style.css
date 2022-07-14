@@ -22,6 +22,10 @@ p{
     display:none;
 }
 
+.drop{
+    display:none;
+}
+
 #background{
     display:flex;
     height: 633px;

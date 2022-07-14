@@ -4,6 +4,8 @@ const canvas = document.getElementById('canvas');
 const canvas2 = document.getElementById('canvas2')
 const ctx = canvas.getContext('2d');
 const ctx2 = canvas2.getContext('2d');
+const player1Laser = document.querySelector('#blue-drop')
+const player2Laser = document.querySelector('#red-drop')
 
 const firstPlayer = {
     w:100,
@@ -140,8 +142,18 @@ function keyUp2(e){
     }
 }
 
-function test(e){
-    console.log(e.key)
+const laser1 = {
+    x: 0,
+    y: 0,
+    w: 100,
+    h: 100,
+}
+
+const laser2 = {
+    x: 0,
+    y: 0,
+    w: 100,
+    h: 100,
 }
 
 update2()
