@@ -92,3 +92,8 @@ input{
     display: flex;
     align-items: flex-end
 }
+
+canvas{
+    position: absolute;
+    top: 100px;
+}

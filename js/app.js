@@ -74,22 +74,70 @@ const gamePage = () => {
     gameScreen.appendChild(player2Icon)
 }
 
-const player1KeyCodes =['ArrowLeft', 'ArrowRight','ShiftRight']
-const player2KeyCodes =['KeyA', 'KeyD','ShiftLeft']
+// const player1KeyCodes =['ArrowLeft', 'ArrowRight','ShiftRight']
+// const player2KeyCodes =['KeyA', 'KeyD','ShiftLeft']
+
+const player1 = document.getElementById('player-1-icon')
+const player2 = document.getElementById('player-2-icon')
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
 
 class Hero {
-    constructor(playerName){
+    constructor(xAxis,yAxis){
+        this.width = 100
+        this.height = 100
+        this.xAxis = xAxis
+        this.yAxis = yAxis
+        this.speed = 5
+        this.dx = 0
+        this.dy = 0
         this.score = 0
-        this.playerName = playerName
     }
     moveLeft(){
-
+        this.dx = -this.speed
     }
     moveRight(){
-
+        this.dx = this.speed
     }
     shoot(){
         
+    }
+    newPos(){
+        this.xAxis += this.dx
+        detectWalls()
+    }
+    detectWalls(){
+        if(this.xAxis < 165){
+            this.xAxis = 165
+        }
+        if(this.xAxis + 10 > canvas.width){
+            this.xAxis = canvas.width - 10
+        }
+    }
+    drawPlayer(image){
+        ctx.drawImage(image, this.xAxis, this.yAxis, this.width, this.height)
+    }
+    clear(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+    keyDown(e){
+        if(e.key === 'ArrowRight'){
+            this.moveRight()
+        }else if(e.key === 'ArrowLeft'){
+            this.moveLeft()
+        }
+    }
+    keyUp(e){
+        if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+            this.dx = 0
+            this.dy = 0
+        }
+    }
+    update(){
+        this.clear()
+        this.drawPlayer()
+        this.newPos()
+        requestAnimationFrame(this.update)
     }
 }
 
@@ -102,24 +150,7 @@ class Enemy {
     }
 }
 
-const aTest = () => {
-    console.log('A Key Test')
-}
-const dTest = () => {
-    console.log('D Key Test')
-}
-const leftShiftTest = () => {
-    console.log('Left Shift Key Test')
-}
-const leftArrowTest = () => {
-    console.log('Left Arrow Key Test')
-}
-const rightArrowTest = () => {
-    console.log('Right Arrow Key Test')
-}
-const rightShiftTest = () => {
-    console.log('Right Shift Key Test')
-}
+
 
 //EVENT LISTENERS
 document.querySelector('#start-button').addEventListener('click',landingPageRemoval)
@@ -135,25 +166,5 @@ document.querySelector('#instructions').addEventListener('click',function(e){
         gamePage()
     }
 })
-
-//keyboard event listener
-window.addEventListener('keydown', function(e){
-    if(e.code == 'KeyA'){
-        aTest()
-    }
-    if(e.code == 'KeyD'){
-        dTest()
-    }
-    if(e.code == 'ShiftLeft'){
-        leftShiftTest()
-    }
-    if(e.code == 'ArrowLeft'){
-        leftArrowTest()
-    }
-    if(e.code == 'ArrowRight'){
-        rightArrowTest()
-    }
-    if(e.code == 'ShiftRight'){
-        rightShiftTest()
-    }
-})
+document.addEventListener('keydown', keyDown)
+document.addEventListener('keyup', keyUp)
