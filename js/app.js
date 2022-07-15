@@ -8,6 +8,7 @@ const ctx2 = canvas2.getContext('2d');
 const ctx3 = canvas3.getContext('2d')
 const player1Drop = document.querySelector('#blue-drop')
 const player2Drop = document.querySelector('#red-drop')
+const dropArray = []
 
 const firstPlayer = {
     w:100,
@@ -60,15 +61,15 @@ function moveLeft(){
 }
 
 function keyDown(e){
-    if(e.key === 'ArrowRight'){
+    if(e.code === 'KeyD'){
         moveRight()
-    }else if(e.key === 'ArrowLeft'){
+    }else if(e.code === 'KeyA'){
         moveLeft()
     }
 }
 
 function keyUp(e){
-    if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+    if(e.code === 'KeyD' || e.code === 'KeyA'){
         firstPlayer.dx = 0;
         firstPlayer.dy = 0;
     }
@@ -130,15 +131,15 @@ function moveLeft2(){
 }
 
 function keyDown2(e){
-    if(e.code === 'KeyD'){
+    if(e.key === 'ArrowRight'){
         moveRight2()
-    }else if(e.code === 'KeyA'){
+    }else if(e.key === 'ArrowLeft'){
         moveLeft2()
     }
 }
 
 function keyUp2(e){
-    if(e.code === 'KeyD' || e.code === 'KeyA'){
+    if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
         secondPlayer.dx = 0;
         secondPlayer.dy = 0;
     }
@@ -178,7 +179,15 @@ class Drop {
         }else{
             this.x = player.x
         }
-        setInterval(moveDrop,10)
+        setInterval(this.moveDrop,10)
+    }
+}
+
+const shotCheck = (e) => {
+    if(e.code === 'ShiftRight'){
+        const drop = new Drop ('https:://i.imgur.com/KqKypNk.png',firstPlayer.x)
+        dropArray.push(drop)
+        setInterval(drop.moveDrop,10)
     }
 }
 
@@ -202,23 +211,27 @@ class Drop {
 
 // const dropTest = () => {
 //     clearDrop()
-//     //drawDrop()
+//     drawDrop()
 //     requestAnimationFrame(dropTest)
 // }
 
 // const moveDrop = () => {
+//     firstDrop.x = firstPlayer.x
 //     firstDrop.y -= firstDrop.speed
 // }
 
-const shotCheck = (e) => {
-    if(e.code === 'ShiftRight'){
-        const drop = new Drop('https://i.imgur.com/KqKypNk.png', firstPlayer.x)
-        drop.shoot(firstPlayer)
-    }
-    setInterval(() => {
-        drop.y -= drop.speed
-    },10)
-}
+// const moveWithPlayer = () =>{
+//     firstDrop.x = firstPlayer.x + 30
+// }
+// setInterval(moveWithPlayer,1);
+
+// const shotCheck = (e) => {
+//     setInterval(()=>{
+//         if(e.code === 'ShiftRight'){
+//             moveDrop()
+//         }
+//     })
+// }
 
 
 //setInterval(moveDrop,10)
