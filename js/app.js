@@ -2,10 +2,12 @@ const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
 const canvas2 = document.getElementById('canvas2')
+const canvas3 = document.getElementById('canvas3')
 const ctx = canvas.getContext('2d');
 const ctx2 = canvas2.getContext('2d');
-const player1Laser = document.querySelector('#blue-drop')
-const player2Laser = document.querySelector('#red-drop')
+const ctx3 = canvas3.getContext('2d')
+const player1Drop = document.querySelector('#blue-drop')
+const player2Drop = document.querySelector('#red-drop')
 
 const firstPlayer = {
     w:100,
@@ -142,21 +144,89 @@ function keyUp2(e){
     }
 }
 
-const laser1 = {
-    x: 0,
-    y: 0,
-    w: 100,
-    h: 100,
+class Drop {
+    constructor(image, x){
+        this.image = ctx3.drawImage(player1Drop, this.x, this.y, this.w, this.h)
+        this.x = x
+        this.y = 550
+        this.w = 50
+        this.h = 50
+        this.dy = 0
+        this.dx = 0
+        this.speed = 5
+    }
+    drawDrop(){
+        ctx3.drawImage(player1Drop, this.x, this.y, this.w, this.h)
+    }
+    clearDrop(){
+        ctx3.clearRect(0, 0, canvas.width, canvas.height)
+    }
+    dropUpdate(){
+        clearDrop()
+        drawDrop()
+        requestAnimationFrame(dropTest)
+    }
+    moveDrop(){
+        this.y -= this.speed
+    }
+    shoot(player){
+        clearDrop()
+        drawDrop()
+        requestAnimationFrame(dropTest)
+        if(player.x === 1000){
+            this.x = player.x - 15
+        }else{
+            this.x = player.x
+        }
+        setInterval(moveDrop,10)
+    }
 }
 
-const laser2 = {
-    x: 0,
-    y: 0,
-    w: 100,
-    h: 100,
+// const firstDrop = {
+//     x: 30,
+//     y: 550,
+//     w: 40,
+//     h: 40,
+//     dx: 0,
+//     dy: 0,
+//     speed: 5,
+// }
+
+// function drawDrop(){
+//     ctx3.drawImage(player1Drop, firstDrop.x, firstDrop.y, firstDrop.w, firstDrop.h)
+// }
+
+// function clearDrop(){
+//     ctx3.clearRect(0, 0, canvas.width, canvas.height)
+// }
+
+// const dropTest = () => {
+//     clearDrop()
+//     //drawDrop()
+//     requestAnimationFrame(dropTest)
+// }
+
+// const moveDrop = () => {
+//     firstDrop.y -= firstDrop.speed
+// }
+
+const shotCheck = (e) => {
+    if(e.code === 'ShiftRight'){
+        const drop = new Drop('https://i.imgur.com/KqKypNk.png', firstPlayer.x)
+        drop.shoot(firstPlayer)
+    }
+    setInterval(() => {
+        drop.y -= drop.speed
+    },10)
 }
+
+
+//setInterval(moveDrop,10)
+//dropTest()
 
 update2()
 document.addEventListener('keydown', keyDown2)
 document.addEventListener('keyup', keyUp2)
+
+document.addEventListener('keydown',shotCheck)
 
