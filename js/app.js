@@ -20,66 +20,6 @@ const firstPlayer = {
     dy: 0,
 }
 
-function drawPlayer() {
-    ctx.drawImage(player1, firstPlayer.x, firstPlayer.y, firstPlayer.w, firstPlayer.h)
-}
-
-function clear(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-}
-
-function newPos(){
-    firstPlayer.x += firstPlayer.dx;
-    firstPlayer.y += firstPlayer.dy;
-    detectWalls()
-}
-
-function detectWalls(){
-    //Left wall
-    if(firstPlayer.x < 0){
-        firstPlayer.x = 0
-    }
-    //Right wall
-    if(firstPlayer.x + firstPlayer.w > canvas.width){
-        firstPlayer.x = canvas.width - firstPlayer.w
-    }
-}
-
-function update() {
-    clear()
-    drawPlayer()
-    newPos()
-    requestAnimationFrame(update)
-}
-
-function moveRight(){
-    firstPlayer.dx = firstPlayer.speed
-}
-
-function moveLeft(){
-    firstPlayer.dx = -firstPlayer.speed
-}
-
-function keyDown(e){
-    if(e.code === 'KeyD'){
-        moveRight()
-    }else if(e.code === 'KeyA'){
-        moveLeft()
-    }
-}
-
-function keyUp(e){
-    if(e.code === 'KeyD' || e.code === 'KeyA'){
-        firstPlayer.dx = 0;
-        firstPlayer.dy = 0;
-    }
-}
-
-update()
-document.addEventListener('keydown', keyDown)
-document.addEventListener('keyup', keyUp)
-
-// --------------------- SECOND PLAYER ---------------------//
 const secondPlayer = {
     w:100,
     h:100,
@@ -90,64 +30,142 @@ const secondPlayer = {
     dy: 0,
 }
 
-function drawPlayer2() {
-    ctx2.drawImage(player2, secondPlayer.x, secondPlayer.y, secondPlayer.w, secondPlayer.h)
+function drawPlayer() {
+    ctx.drawImage(player1, firstPlayer.x, firstPlayer.y, firstPlayer.w, firstPlayer.h)
+    ctx.drawImage(player2, secondPlayer.x, secondPlayer.y, secondPlayer.w, secondPlayer.h)
 }
 
-function clear2(){
-    ctx2.clearRect(0, 0, canvas2.width, canvas2.height)
+function clear(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-function newPos2(){
+function newPos(){
+    firstPlayer.x += firstPlayer.dx;
+    firstPlayer.y += firstPlayer.dy;
     secondPlayer.x += secondPlayer.dx;
     secondPlayer.y += secondPlayer.dy;
-    detectWalls2()
+    detectWalls()
 }
 
-function detectWalls2(){
+function detectWalls(player){
     //Left wall
+    if(firstPlayer.x < 0){
+        firstPlayer.x = 0
+    }
     if(secondPlayer.x < 0){
         secondPlayer.x = 0
     }
     //Right wall
+    if(firstPlayer.x + firstPlayer.w > canvas.width){
+        firstPlayer.x = canvas.width - firstPlayer.w
+        
+    }
     if(secondPlayer.x + secondPlayer.w > canvas2.width){
         secondPlayer.x = canvas2.width -secondPlayer.w
     }
 }
 
-function update2() {
-    clear2()
-    drawPlayer2()
-    newPos2()
-    requestAnimationFrame(update2)
+function update() {
+    clear()
+    drawPlayer()
+    newPos()
+    requestAnimationFrame(update)
 }
 
-function moveRight2(){
-    secondPlayer.dx = secondPlayer.speed
+function moveRight(player){
+    player.dx = player.speed
 }
 
-function moveLeft2(){
-    secondPlayer.dx = -secondPlayer.speed
+function moveLeft(player){
+    player.dx = -player.speed
 }
 
-function keyDown2(e){
-    if(e.key === 'ArrowRight'){
-        moveRight2()
-    }else if(e.key === 'ArrowLeft'){
-        moveLeft2()
+function keyDown(e){
+    if(e.code === 'KeyD'){
+        moveRight(firstPlayer)
+    }else if(e.code === 'KeyA'){
+        moveLeft(firstPlayer)
+    }else if(e.code === 'ArrowRight'){
+        moveRight(secondPlayer)
+    }else if(e.code === 'ArrowLeft'){
+        moveLeft(secondPlayer)
     }
 }
 
-function keyUp2(e){
-    if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
-        secondPlayer.dx = 0;
-        secondPlayer.dy = 0;
+function keyUp(e){
+    if(e.code === 'KeyD' || e.code === 'KeyA'){
+        firstPlayer.dx = 0;
+        firstPlayer.dy = 0;
+    }else if(e.code === 'ArrowLeft' || e.code === 'ArrowRight'){
+        secondPlayer.dx = 0
+        secondPlayer.dy = 0
     }
 }
+
+update()
+document.addEventListener('keydown', keyDown)
+document.addEventListener('keyup', keyUp)
+
+// --------------------- SECOND PLAYER ---------------------//
+
+
+// function drawPlayer2() {
+//     ctx2.drawImage(player2, secondPlayer.x, secondPlayer.y, secondPlayer.w, secondPlayer.h)
+// }
+
+// function clear2(){
+//     ctx2.clearRect(0, 0, canvas2.width, canvas2.height)
+// }
+
+// function newPos2(){
+    
+// }
+
+// function detectWalls2(){
+//     //Left wall
+//     if(secondPlayer.x < 0){
+//         secondPlayer.x = 0
+//     }
+//     //Right wall
+//     if(secondPlayer.x + secondPlayer.w > canvas2.width){
+//         secondPlayer.x = canvas2.width -secondPlayer.w
+//     }
+// }
+
+// function update2() {
+//     clear2()
+//     drawPlayer2()
+//     newPos2()
+//     requestAnimationFrame(update2)
+// }
+
+// function moveRight2(){
+//     secondPlayer.dx = secondPlayer.speed
+// }
+
+// function moveLeft2(){
+//     secondPlayer.dx = -secondPlayer.speed
+// }
+
+// function keyDown2(e){
+//     if(e.key === 'ArrowRight'){
+//         moveRight2()
+//     }else if(e.key === 'ArrowLeft'){
+//         moveLeft2()
+//     }
+// }
+
+// function keyUp2(e){
+//     if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+//         secondPlayer.dx = 0;
+//         secondPlayer.dy = 0;
+//     }
+// }
 
 class Drop {
     constructor(image, x){
-        this.image = ctx3.drawImage(player1Drop, this.x, this.y, this.w, this.h)
+        this.image = new Image()
+        this.image.src = image
         this.x = x
         this.y = 550
         this.w = 50
@@ -163,17 +181,17 @@ class Drop {
         ctx3.clearRect(0, 0, canvas.width, canvas.height)
     }
     dropUpdate(){
-        clearDrop()
-        drawDrop()
-        requestAnimationFrame(dropTest)
+        this.clearDrop()
+        this.drawDrop()
+        requestAnimationFrame(this.dropUpdate)
     }
     moveDrop(){
         this.y -= this.speed
     }
     shoot(player){
-        clearDrop()
-        drawDrop()
-        requestAnimationFrame(dropTest)
+        this.clearDrop()
+        this.drawDrop()
+        requestAnimationFrame(this.dropUpdate)
         if(player.x === 1000){
             this.x = player.x - 15
         }else{
@@ -184,10 +202,10 @@ class Drop {
 }
 
 const shotCheck = (e) => {
-    if(e.code === 'ShiftRight'){
+    if(e.code === 'ShiftLeft'){
         const drop = new Drop ('https:://i.imgur.com/KqKypNk.png',firstPlayer.x)
         dropArray.push(drop)
-        setInterval(drop.moveDrop,10)
+        drop.shoot(firstPlayer)
     }
 }
 
@@ -216,7 +234,6 @@ const shotCheck = (e) => {
 // }
 
 // const moveDrop = () => {
-//     firstDrop.x = firstPlayer.x
 //     firstDrop.y -= firstDrop.speed
 // }
 
