@@ -1,9 +1,9 @@
 const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
-const canvas2 = document.getElementById('canvas2');
+//const canvas2 = document.getElementById('canvas2');
 const ctx = canvas.getContext('2d');
-const ctx2 = canvas2.getContext('2d');
+//const ctx2 = canvas2.getContext('2d');
 const shotsArray = [];
 // let shoot = false;
 let timer = document.querySelector('#timer');
@@ -136,51 +136,18 @@ update()
 document.addEventListener('keydown', keyDown)
 document.addEventListener('keyup', keyUp)
 
-// class Bullet {
-//     constructor({position, velocity}){
-//         this.position = position
-//         this.velocity = velocity
-//         this.radius = 5
-//     }
-//     clear(){
-//         ctx.clearRect(0, 0, canvas.width, canvas.height)
-//         //console.log('in clear')
-//     }
-//     drawBullet(){
-//         this.clear()
-//         ctx.beginPath()
-//         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2)
-//         ctx.fillStyle = 'black'
-//         ctx.fill()
-//         ctx.closePath()
-//         //console.log(`pos(${this.position.x},${this.position.y}, rad: ${this.radius} vel(${this.velocity.x}, ${this.velocity.y})`);
-//         }
-//     update2(){
-//         this.clear()
-//         this.drawBullet()
-//         this.position.x += this.velocity.x
-//         this.position.y += this.velocity.y
-//         //console.log('in update')
-//     }
-    
-// }
-
 class Bullet {
     constructor({position, velocity}){
         this.position = position
         this.velocity = velocity
         this.radius = 5
     }
-    clear(){
-        ctx2.clearRect(0, 0, canvas.width, canvas.height)
-    }
     drawBullet(){
-        this.clear()
-        ctx2.fillStyle = 'black'
-        ctx2.beginPath()
-        ctx2.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2)
-        ctx2.fill()
-        ctx2.closePath()
+        ctx.fillStyle = 'black'
+        ctx.beginPath()
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2)
+        ctx.fill()
+        ctx.closePath()
         //console.log(`pos(${this.position.x},${this.position.y}, rad: ${this.radius} vel(${this.velocity.x}, ${this.velocity.y})`);
     }
     update(){
@@ -196,7 +163,7 @@ const shotCheck = (e) => {
     if(e.code === 'ShiftLeft'){
         shotsArray.push(new Bullet({
             position:{
-                x: game.firstPlayer.x + 30,
+                x: game.firstPlayer.x + game.firstPlayer.w / 2,
                 y: game.firstPlayer.y
             },
             velocity:{
@@ -204,22 +171,19 @@ const shotCheck = (e) => {
                 y: -5
             }
         }))
-        console.log('shot')
-        console.log(shotsArray)
-    } 
+    }
+    if(e.code === 'ShiftRight'){
+        shotsArray.push(new Bullet({
+            position:{
+                x: game.secondPlayer.x + game.secondPlayer.w / 2,
+                y: game.secondPlayer.y
+            },
+            velocity:{
+                x:0,
+                y:-5
+            }
+        }))
+    }
 }
 
-// const newBullet = new Bullet({
-//     position:{
-//         x: 300,
-//         y: 300
-//     },
-//     velocity:{
-//         x:0,
-//         y: -5
-//     }
-// })
-//dropArray.push(newBullet)
-
-//dropUpdate()
 document.addEventListener('keydown',shotCheck)
