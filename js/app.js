@@ -87,16 +87,35 @@ function detectWalls(){
     }
 }
 const animate = () =>{
-    for(let bullet of shotsArray){
+    shotsArray.forEach(bullet => {
         bullet.update()
-        // console.log('in animate')
-    }
-    for(let cell of cellsArray){
-        cell.updateCell()
-        //console.log('in animate for cells')
-    }
-}
+    })
+    // for(let cell of cellsArray){
+    //     cell.updateCell()
+    //     //console.log('in animate for cells')
+    // }
+    cellsArray.forEach((cell, index) =>{
+        if(cell.position.y >= 660){
+            cellsArray.splice(index,1)
+            console.log('inside if statement')
+        }else{
+            cell.updateCell()
+        }
+    })
+    //if bullet position y = cell positon y and bullet position x = cell position x
+        //remove bullet and cell
 
+    shotsArray.forEach(bullet =>{
+        cellsArray.forEach(cell =>{
+            if(bullet.position.y == cell.position.y + 8 || bullet.position.y == cell.position.y - 8 && bullet.position.x == cell.position.x + 8 || bullet.position.y == cell.position.x - 8){
+                cellsArray.splice(cellsArray[cell],1)
+                // shotsArray.splice(index,1)
+                }
+            })
+        })
+    }
+
+//bullet.position.x  == cellsArray[0].position.x
 function update() {
     clear()
     drawPlayer()
@@ -215,6 +234,17 @@ class Cell {
     }
 }
 
+// cellsArray.push(new Cell({
+//         position:{
+//             x:Math.floor(Math.random() * canvas.width),
+//             y:300
+//         },
+//         velocity:{
+//             x:0,
+//             y:0
+//         }
+// }))
+
 setInterval(()=>{
     cellsArray.push(new Cell({
         position:{
@@ -230,12 +260,3 @@ setInterval(()=>{
     //console.log(cellsArray)
 },1000)
 
-const collisionDetection = (player) => {
-    shotsArray.forEach(bullet => {
-        if(bullet.postion.y - bullet.raduis <= cell.position.y + cell.raduis ){
-            cellsArray.splice(i,1)
-            shotsArray.splice(j,1)
-            game.player.score += 1
-        }
-    })
-}
