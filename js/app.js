@@ -1,11 +1,10 @@
 const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
-//const canvas2 = document.getElementById('canvas2');
 const ctx = canvas.getContext('2d');
-//const ctx2 = canvas2.getContext('2d');
 const shotsArray = [];
-// let shoot = false;
+const cellsArray = []
+const covidCells = document.querySelector('#covid-cells')
 let timer = document.querySelector('#timer');
 
 //Sets up timer
@@ -92,6 +91,10 @@ const animate = () =>{
         bullet.update()
         // console.log('in animate')
     }
+    for(let cell of cellsArray){
+        cell.updateCell()
+        //console.log('in animate for cells')
+    }
 }
 
 function update() {
@@ -152,14 +155,13 @@ class Bullet {
     }
     update(){
         this.drawBullet()
-        this.position.x += this.velocity.x
         this.position.y += this.velocity.y
         //console.log('in update')
     }
 }
 
 
-const shotCheck = (e) => {
+const shoot = (e) => {
     if(e.code === 'ShiftLeft'){
         shotsArray.push(new Bullet({
             position:{
@@ -171,6 +173,7 @@ const shotCheck = (e) => {
                 y: -5
             }
         }))
+        console.log(shotsArray)
     }
     if(e.code === 'ShiftRight'){
         shotsArray.push(new Bullet({
@@ -186,4 +189,53 @@ const shotCheck = (e) => {
     }
 }
 
-document.addEventListener('keydown',shotCheck)
+document.addEventListener('keydown',shoot)
+
+//covid cells 
+
+class Cell {
+    constructor({position,velocity}){
+        this.position = position
+        this.velocity = velocity
+        this.radius = 8
+    }
+    drawCell(){
+        ctx.fillStyle = 'red'
+        ctx.beginPath()
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.closePath()
+        //console.log(`pos${this.position.x},${this.position.y}, rad: ${this.radius}, vel(${this.velocity.x}, ${this.velocity.y})`)
+    }
+    updateCell(){
+        this.drawCell()
+        // this.position.x += Math.floor((Math.random) * canvas.width)
+        this.position.y += this.velocity.y
+        //console.log('inside update covid')
+    }
+}
+
+setInterval(()=>{
+    cellsArray.push(new Cell({
+        position:{
+            x:Math.floor(Math.random() * canvas.width),
+            y:0
+        },
+        velocity:{
+            x:0,
+            y:3
+        }
+    }))
+    //console.log('in interval')
+    //console.log(cellsArray)
+},1000)
+
+const collisionDetection = (player) => {
+    shotsArray.forEach(bullet => {
+        if(bullet.postion.y - bullet.raduis <= cell.position.y + cell.raduis ){
+            cellsArray.splice(i,1)
+            shotsArray.splice(j,1)
+            game.player.score += 1
+        }
+    })
+}

@@ -17,8 +17,8 @@ p{
     display:none;
 }
 
-.drop{
-    display:none;
+#covid-cells{
+    display: none;
 }
 
 #background{
