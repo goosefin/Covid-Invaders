@@ -1,34 +1,36 @@
+body{
+    background-color: rgb(3, 125, 182);
+}
+
 header{
     display:flex;
     justify-content: space-evenly;
-    background-color: white;
-    width: 90%;
-    margin-left:4em;
+    background-color: rgb(3, 125, 182);
+    color: white;
 }
 
 p{
-    font-size: 25px;
     font-family: 'Nosifer', cursive;
-    font-size: 25px;
- 
+    font-size: 30px;
+}
+
+#game-play{
+    display:flex;
 }
 
 .syringe{
     display:none;
 }
 
-#covid-cells{
-    display: none;
-}
-
 #background{
     display:flex;
     height: 633px;
-    margin-left: 10%;
+    margin-left: 12.5%;
 }
 
 canvas{
     position: absolute;
     top: 100px;
-    left: 10.5%;
+    margin-left: 12.5%;
+    padding: 0, 5%;
 }

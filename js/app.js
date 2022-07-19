@@ -6,6 +6,18 @@ const shotsArray = [];
 const cellsArray = []
 const covidCells = document.querySelector('#covid-cells')
 let timer = document.querySelector('#timer');
+let playerOneCount = document.querySelector('#player-one')
+let playerTwoCount = document.querySelector('#player-two')
+
+// alert("WELCOME TO COVID INVADERS")
+// const playerOneName = prompt('Player 1: enter your name.')
+// const playerTwoName = prompt('Player 2: enter your name.')
+// alert(`${playerOneName}, you will play as blue. Move left and right with key's 'A' and 'D'. Shoot the cells with shift left.`)
+// alert(`${playerTwoName}, you will play as blue. Move with arrow left and right. Shoot the cells with shift right.`)
+// alert('Rounds will last 60 seconds! Player with the most cells shot down wins! Press OK to start game.')
+
+// playerOneCount.innerText = `${playerOneName}:`
+// playerTwoCount.innerText = `${playerTwoName}:`
 
 //Sets up timer
 let counter = 90
@@ -90,10 +102,6 @@ const animate = () =>{
     shotsArray.forEach(bullet => {
         bullet.update()
     })
-    // for(let cell of cellsArray){
-    //     cell.updateCell()
-    //     //console.log('in animate for cells')
-    // }
     cellsArray.forEach((cell, index) =>{
         if(cell.position.y >= 660){
             cellsArray.splice(index,1)
@@ -105,41 +113,15 @@ const animate = () =>{
     //if bullet position y = cell positon y and bullet position x = cell position x
         //remove bullet and cell
 
-    shotsArray.forEach((bullet,index) =>{
-        cellsArray.forEach((cell, index) =>{
-            if((bullet.position.y == rangeUp(cell.position.y, 5).includes(cell.position.y)
-            ||bullet.position.y == rangeDown(cell.position.y, 5).includes(cell.position.y) && (bullet.position.x == rangeUp(cell.position.x, 5).includes(cell.position.x) || bullet.position.y == rangeDown(cell.position.x, 5).includes(cell.position.x)))){
-                cellsArray.splice(index,1)
-                shotsArray.splice(index,1)
-                console.log(`${cellsArray.indexOf(index)}inside of collision detection`)
-                }
-            })
+    shotsArray.forEach((bullet, index) =>{
+        cellsArray.forEach((cell,index) => {
+            if(bullet.position.x <= cell.position.x + 15 && bullet.position.x >= cell.position.x - 15 && bullet.position.y <= cell.position.y + 15 && bullet.position.y >= cell.position.y - 15)  {
+                console.log('hit')
+                cellsArray.splice(index, 1)
+            }
         })
+    })
 }
-
-
-const rangeUp = (start,end) =>{
-    let rangeUpArray = []
-    for(let i = start; i <= end; i++){
-        rangeUpArray.push(i)
-    }
-    return rangeUpArray
-}
-
-const rangeDown =  (start, end) => {
-    let rangeDownArray = []
-    for(let i = start; i >= end; i--){
-        rangeDownArray.push(i)
-    }
-    return rangeDownArray
-}
-
-if(rangeUp(1,5).includes(2)){
-    console.log(true)
-}
-
-console.log(rangeUp(1,5))
-console.log(rangeDown(5,1))
 
 
 function update() {
