@@ -24,11 +24,12 @@ p{
 #background{
     display:flex;
     height: 633px;
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 canvas{
     position: absolute;
     top: 100px;
-    left: 10.5%;
+    margin-left: 15%;
+    padding: 0, 5%;
 }

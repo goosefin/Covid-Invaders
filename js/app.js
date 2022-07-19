@@ -2,6 +2,7 @@ const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+document.body.style.zoom = "125%";
 const shotsArray = [];
 const cellsArray = []
 const covidCells = document.querySelector('#covid-cells')
@@ -95,7 +96,7 @@ const animate = () =>{
     //     //console.log('in animate for cells')
     // }
     cellsArray.forEach((cell, index) =>{
-        if(cell.position.y >= 660){
+        if(cell.position.y >= 660 && cell.position.x <= 15){
             cellsArray.splice(index,1)
             console.log('inside if statement')
         }else{
@@ -107,8 +108,9 @@ const animate = () =>{
 
     shotsArray.forEach((bullet,index) =>{
         cellsArray.forEach((cell, index) =>{
-            if((bullet.position.y == rangeUp(cell.position.y, 5).includes(cell.position.y)
-            ||bullet.position.y == rangeDown(cell.position.y, 5).includes(cell.position.y) && (bullet.position.x == rangeUp(cell.position.x, 5).includes(cell.position.x) || bullet.position.y == rangeDown(cell.position.x, 5).includes(cell.position.x)))){
+            /*if((bullet.position.y == rangeUp(cell.position.y, 5).includes(cell.position.y)
+            ||bullet.position.y == rangeDown(cell.position.y, 5).includes(cell.position.y) && (bullet.position.x == rangeUp(cell.position.x, 5).includes(cell.position.x) || bullet.position.y == rangeDown(cell.position.x, 5).includes(cell.position.x))))*/if(bullet.position.x <= cell.position.x + 15 && bullet.position.x >= cell.position.x - 15 && bullet.position.y <= cell.position.y + 15 && bullet.position.y >= cell.position.y - 15)  {
+                console.log('hit')
                 cellsArray.splice(index,1)
                 shotsArray.splice(index,1)
                 console.log(`${cellsArray.indexOf(index)}inside of collision detection`)
