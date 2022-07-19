@@ -105,17 +105,43 @@ const animate = () =>{
     //if bullet position y = cell positon y and bullet position x = cell position x
         //remove bullet and cell
 
-    shotsArray.forEach(bullet =>{
-        cellsArray.forEach(cell =>{
-            if(bullet.position.y == cell.position.y + 8 || bullet.position.y == cell.position.y - 8 && bullet.position.x == cell.position.x + 8 || bullet.position.y == cell.position.x - 8){
-                cellsArray.splice(cellsArray[cell],1)
-                // shotsArray.splice(index,1)
+    shotsArray.forEach((bullet,index) =>{
+        cellsArray.forEach((cell, index) =>{
+            if((bullet.position.y == rangeUp(cell.position.y, 5).includes(cell.position.y)
+            ||bullet.position.y == rangeDown(cell.position.y, 5).includes(cell.position.y) && (bullet.position.x == rangeUp(cell.position.x, 5).includes(cell.position.x) || bullet.position.y == rangeDown(cell.position.x, 5).includes(cell.position.x)))){
+                cellsArray.splice(index,1)
+                shotsArray.splice(index,1)
+                console.log(`${cellsArray.indexOf(index)}inside of collision detection`)
                 }
             })
         })
-    }
+}
 
-//bullet.position.x  == cellsArray[0].position.x
+
+const rangeUp = (start,end) =>{
+    let rangeUpArray = []
+    for(let i = start; i <= end; i++){
+        rangeUpArray.push(i)
+    }
+    return rangeUpArray
+}
+
+const rangeDown =  (start, end) => {
+    let rangeDownArray = []
+    for(let i = start; i >= end; i--){
+        rangeDownArray.push(i)
+    }
+    return rangeDownArray
+}
+
+if(rangeUp(1,5).includes(2)){
+    console.log(true)
+}
+
+console.log(rangeUp(1,5))
+console.log(rangeDown(5,1))
+
+
 function update() {
     clear()
     drawPlayer()
@@ -180,7 +206,7 @@ class Bullet {
 }
 
 
-const shoot = (e) => {
+const player1Shoot = (e) => {
     if(e.code === 'ShiftLeft'){
         shotsArray.push(new Bullet({
             position:{
@@ -192,8 +218,9 @@ const shoot = (e) => {
                 y: -5
             }
         }))
-        console.log(shotsArray)
     }
+}
+const player2Shoot = (e) => {
     if(e.code === 'ShiftRight'){
         shotsArray.push(new Bullet({
             position:{
@@ -208,7 +235,8 @@ const shoot = (e) => {
     }
 }
 
-document.addEventListener('keydown',shoot)
+document.addEventListener('keydown',player1Shoot)
+document.addEventListener('keydown',player2Shoot)
 
 //covid cells 
 
