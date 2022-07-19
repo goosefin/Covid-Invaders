@@ -8,6 +8,9 @@ const covidCells = document.querySelector('#covid-cells')
 let timer = document.querySelector('#timer');
 let playerOneCount = document.querySelector('#player-one')
 let playerTwoCount = document.querySelector('#player-two')
+let playerOneShot = false
+let playerTwoShot = false
+
 
 // alert("WELCOME TO COVID INVADERS")
 // const playerOneName = prompt('Player 1: enter your name.')
@@ -20,7 +23,7 @@ let playerTwoCount = document.querySelector('#player-two')
 // playerTwoCount.innerText = `${playerTwoName}:`
 
 //Sets up timer
-let counter = 90
+let counter = 60
 const runTimer = () =>{
     if(counter > 0){
         counter -= 1
@@ -70,7 +73,6 @@ function drawPlayer() {
 
 function clear(){
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //console.log('in clear')
 }
 
 function newPos(){
@@ -98,6 +100,7 @@ function detectWalls(){
         game.secondPlayer.x = canvas.width - game.secondPlayer.w
     }
 }
+
 const animate = () =>{
     shotsArray.forEach(bullet => {
         bullet.update()
@@ -110,14 +113,24 @@ const animate = () =>{
             cell.updateCell()
         }
     })
-    //if bullet position y = cell positon y and bullet position x = cell position x
-        //remove bullet and cell
-
-    shotsArray.forEach((bullet, index) =>{
-        cellsArray.forEach((cell,index) => {
+    shotsArray.forEach((bullet, i) =>{
+        cellsArray.forEach((cell,j) => {
             if(bullet.position.x <= cell.position.x + 15 && bullet.position.x >= cell.position.x - 15 && bullet.position.y <= cell.position.y + 15 && bullet.position.y >= cell.position.y - 15)  {
-                console.log('hit')
-                cellsArray.splice(index, 1)
+                // cellsArray.splice(j, 1)
+                // shotsArray.splice(i, 1)
+                if(playerOneShot){
+                    cellsArray.splice(j, 1)
+                    shotsArray.splice(i, 1)
+                    game.firstPlayer.score += 1
+                    playerOneCount.innerText = game.firstPlayer.score
+                    console.log('inside player 1 score')
+                }else if(playerTwoShot){
+                    cellsArray.splice(j, 1)
+                    shotsArray.splice(i, 1)
+                    game.secondPlayer.score += 1
+                    playerTwoCount.innerText = game.secondPlayer.score
+                    console.log('inside player 2 score')
+                }
             }
         })
     })
@@ -178,18 +191,17 @@ class Bullet {
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI*2)
         ctx.fill()
         ctx.closePath()
-        //console.log(`pos(${this.position.x},${this.position.y}, rad: ${this.radius} vel(${this.velocity.x}, ${this.velocity.y})`);
     }
     update(){
         this.drawBullet()
         this.position.y += this.velocity.y
-        //console.log('in update')
     }
 }
 
 
 const player1Shoot = (e) => {
     if(e.code === 'ShiftLeft'){
+        playerOneShot = true
         shotsArray.push(new Bullet({
             position:{
                 x: game.firstPlayer.x + game.firstPlayer.w / 2,
@@ -202,8 +214,10 @@ const player1Shoot = (e) => {
         }))
     }
 }
+
 const player2Shoot = (e) => {
     if(e.code === 'ShiftRight'){
+        playerTwoShot = true
         shotsArray.push(new Bullet({
             position:{
                 x: game.secondPlayer.x + game.secondPlayer.w / 2,
@@ -217,8 +231,22 @@ const player2Shoot = (e) => {
     }
 }
 
+const player1KeyDownShoot = (e) => {
+    if(e.code == 'ShiftLeft'){
+        playerOneShot = false;
+    }
+}
+
+const player2KeyDownShoot = (e) => {
+    if(e.code == 'ShiftLeft'){
+        playerTwoShot = false;
+    }
+}
+
 document.addEventListener('keydown',player1Shoot)
 document.addEventListener('keydown',player2Shoot)
+document.addEventListener('keyup',player1KeyDownShoot)
+document.addEventListener('keyup',player2KeyDownShoot)
 
 //covid cells 
 
@@ -234,13 +262,10 @@ class Cell {
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
         ctx.fill()
         ctx.closePath()
-        //console.log(`pos${this.position.x},${this.position.y}, rad: ${this.radius}, vel(${this.velocity.x}, ${this.velocity.y})`)
     }
     updateCell(){
         this.drawCell()
-        // this.position.x += Math.floor((Math.random) * canvas.width)
         this.position.y += this.velocity.y
-        //console.log('inside update covid')
     }
 }
 
@@ -270,3 +295,14 @@ setInterval(()=>{
     //console.log(cellsArray)
 },1000)
 
+
+
+// shotsArray.forEach(bullet =>{
+//     cellsArray.forEach(cell =>{
+//         if(bullet.position.y == cell.position.y + 8 || bullet.position.y == cell.position.y - 8 
+//         && bullet.position.x == cell.position.x + 8 || bullet.position.y == cell.position.x - 8){
+//             cellsArray.splice(cellsArray[cell],1)
+//             // shotsArray.splice(index,1)
+//         }
+//     })
+// })
