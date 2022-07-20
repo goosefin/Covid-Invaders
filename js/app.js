@@ -2,6 +2,7 @@
 const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
+const popUp = document.querySelector('#pop-up')
 const ctx = canvas.getContext('2d');
 const shotsArray = [];
 const cellsArray = []
@@ -11,42 +12,14 @@ let playerOneCount = document.querySelector('#player-one')
 let playerTwoCount = document.querySelector('#player-two')
 let playerOneShot = false
 let playerTwoShot = false
+let timeCounter = 20
 
 //INTRO TO THE GAME, INSTRUCTIONS AND NAME INPUTS
-alert("WELCOME TO COVID INVADERS")
+// alert("WELCOME TO COVID INVADERS")
 const playerOneName = prompt('Player 1: enter your name.')
 const playerTwoName = prompt('Player 2: enter your name.')
-alert(`${playerOneName}, you will play as BLUE. Move with KEYS A and D. Shoot the cells with SHIFT LEFT.`)
-alert(`${playerTwoName}, you will play as RED. Move with ARROW LEFT and RIGHT. Shoot the cells with SHIFT RIGHT.`)
-alert('Rounds will last 60 seconds! Player with the most cells shot down wins! Press OK to start game.')
-
-playerOneCount.innerText = `${playerOneName}:`
-playerTwoCount.innerText = `${playerTwoName}:`
-
-
-//TIMER FOR COUNTDOWN CLOCK
-let counter = 10
-const runTimer = () =>{
-    if(counter > 0){
-        counter -= 1
-        timer.innerText = `Time: ${counter}`
-    }
-}
-
-//COUNTDOWN CLOCK END
-let timerCount = setInterval(() => {
-    runTimer()
-    if(counter == 0){
-        game.checkWinner()
-        clearInterval(timerCount)
-        clearInterval(cellSpawn)
-        timer.innerText = 'Game Over'
-        setTimeout(() => {
-            alert('Play again?')
-            location.reload()
-        },5000)
-    }
-},1000)
+// playerOneCount.innerText = `${playerOneName}:`
+// playerTwoCount.innerText = `${playerTwoName}:`
 
 //GAME OBJECT WITH PLAYERS AND METHODS
 const game = {
@@ -84,6 +57,39 @@ const game = {
             document.body.appendChild(tiePopUp)
             tiePopUp.innerText = 'Players Tied!!'
         }
+    },
+    runTimer(){
+        if(timeCounter > 0){
+            timeCounter -= 1
+            timer.innerText = `Time: ${timeCounter}`
+        }
+    },
+    startGame(){
+        const cellSpawn = setInterval(()=>{
+            cellsArray.push(new Cell({
+                position:{
+                    x:Math.floor(Math.random() * canvas.width),
+                    y:0
+                },
+                velocity:{
+                    x:0,
+                    y:3
+                }
+            }))
+        },1000);
+        let timerCount = setInterval(() => {
+            this.runTimer()
+            if(timeCounter == 0){
+                this.checkWinner()
+                clearInterval(timerCount)
+                clearInterval(cellSpawn)
+                timer.innerText = 'Game Over'
+                setTimeout(() => {
+                    alert('Play again?')
+                    location.reload()
+                },5000)
+            }
+        },1000);
     },
     drawPlayer(){
         ctx.drawImage(player1, this.firstPlayer.x, this.firstPlayer.y, this.firstPlayer.w, this.firstPlayer.h)
@@ -138,20 +144,6 @@ class Cell {
         this.position.y += this.velocity.y
     }
 }
-
-//RANDOMLY GENERATED CELL SPAWNS
-const cellSpawn = setInterval(()=>{
-    cellsArray.push(new Cell({
-        position:{
-            x:Math.floor(Math.random() * canvas.width),
-            y:0
-        },
-        velocity:{
-            x:0,
-            y:3
-        }
-    }))
-},1000)
 
 //BULLET CLASS CONSTRUCTOR
 class Bullet {
@@ -283,25 +275,13 @@ const player2Shoot = (e) => {
     }
 }
 
-//PLAYER ONE SHOOTING VARIABLE UPDATE
-const player1KeyDownShoot = (e) => {
-    if(e.code == 'ShiftLeft'){
-        playerOneShot = false;
-    }
-}
-
-//PLAYER TWO SHOOTING VARIABLE UPDATE
-const player2KeyDownShoot = (e) => {
-    if(e.code == 'ShiftRight'){
-        playerTwoShot = false;
-    }
-}
-
 //EVENT HANDLER LISTENING
 update()
 document.addEventListener('keydown', keyDown)
 document.addEventListener('keyup', keyUp)
 document.addEventListener('keydown',player1Shoot)
 document.addEventListener('keydown',player2Shoot)
-document.addEventListener('keyup',player1KeyDownShoot)
-document.addEventListener('keyup',player2KeyDownShoot)
+document.getElementById('play-button').addEventListener('click', () =>{
+    popUp.style.display = 'none'
+    game.startGame()
+})

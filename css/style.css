@@ -1,21 +1,20 @@
 body{
-    /* background-color: rgb(0, 0, 0); */
     background-image: url('../Images/germs.gif');
 }
 
 header{
     display:flex;
     justify-content: space-evenly;
-    /*background-color: rgb(0, 0, 0);*/
     color: white;
 }
 
-p{
+.header{
     font-family: 'Nosifer', cursive;
     font-size: 30px;
     color: #40D61A;
     background-color: black;
 }
+
 
 #game-play{
     display:flex;
@@ -41,9 +40,32 @@ canvas{
 h2{
     font-family:'Nosifer', cursive;
     color: #40D61A;
-    background-color: black;
     position: absolute;
     top: 40%;
     left: 33%;
     font-size: 50px;
+    background-color: black;
+}
+
+#pop-up{
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    z-index: 3;
+    left: 32%;
+    top: 32%;
+    line-height: 1.5;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.instructions{
+    font-family: 'Nosifer', cursive;
+    font-size: 30px;
+    color: #40D61A;
+    font-size: 15px;
+    color: black;
 }
