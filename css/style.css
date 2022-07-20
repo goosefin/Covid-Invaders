@@ -1,17 +1,20 @@
 body{
-    background-color: rgb(0, 0, 0);
+    /* background-color: rgb(0, 0, 0); */
+    background-image: url('../Images/germs.gif');
 }
 
 header{
     display:flex;
     justify-content: space-evenly;
-    background-color: rgb(0, 0, 0);
+    /*background-color: rgb(0, 0, 0);*/
     color: white;
 }
 
 p{
     font-family: 'Nosifer', cursive;
     font-size: 30px;
+    color: #40D61A;
+    background-color: black;
 }
 
 #game-play{
