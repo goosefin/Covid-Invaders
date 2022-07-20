@@ -15,23 +15,36 @@ let playerTwoShot = false
 // alert("WELCOME TO COVID INVADERS")
 // const playerOneName = prompt('Player 1: enter your name.')
 // const playerTwoName = prompt('Player 2: enter your name.')
-// alert(`${playerOneName}, you will play as blue. Move left and right with key's 'A' and 'D'. Shoot the cells with shift left.`)
-// alert(`${playerTwoName}, you will play as blue. Move with arrow left and right. Shoot the cells with shift right.`)
-// alert('Rounds will last 60 seconds! Player with the most cells shot down wins! Press OK to start game.')
+// // alert(`${playerOneName}, you will play as blue. Move left and right with key's 'A' and 'D'. Shoot the cells with shift left.`)
+// // alert(`${playerTwoName}, you will play as blue. Move with arrow left and right. Shoot the cells with shift right.`)
+// // alert('Rounds will last 60 seconds! Player with the most cells shot down wins! Press OK to start game.')
 
-// playerOneCount.innerText = `${playerOneName}:`
-// playerTwoCount.innerText = `${playerTwoName}:`
+// // playerOneCount.innerText = `${playerOneName}:`
+// // playerTwoCount.innerText = `${playerTwoName}:`
 
-//Sets up timer
-let counter = 60
-const runTimer = () =>{
-    if(counter > 0){
-        counter -= 1
-        timer.innerText = `Time: ${counter}`
-    }
-}
 
-//setInterval(runTimer,1000)
+// //Sets up timer
+// let counter = 10
+// const runTimer = () =>{
+//     if(counter > 0){
+//         counter -= 1
+//         timer.innerText = `Time: ${counter}`
+//     }
+// }
+
+// let timerCount = setInterval(() => {
+//     runTimer()
+//     if(counter == 0){
+//         game.checkWinner()
+//         clearInterval(timerCount)
+//         clearInterval(cellSpawn)
+//         timer.innerText = 'Game Over'
+//         setTimeout(() => {
+//             alert('Play again?')
+//             location.reload()
+//         },5000)
+//     }
+// },1000)
 
 //creates the game object
 const game = {
@@ -58,12 +71,18 @@ const game = {
     checkWinner(){
         if(this.firstPlayer.score > this.secondPlayer.score){
             const winnerPopUp = document.createElement('h2')
-            winnerPopUp.innerText='Player 1 Wins!!'
+            document.body.appendChild(winnerPopUp)
+            winnerPopUp.innerText=`${playerOneName} wins!!`
         }else if(this.secondPlayer.score > this.firstPlayer.score){
             const winnerPopUp2 = document.createElement('h2')
-            winnerPopUp2.innerText='Player 2 Wins!!'
+            document.body.appendChild(winnerPopUp2)
+            winnerPopUp2.innerText=`${playerTwoName} wins`
+        }else if(this.firstPlayer.score == this.secondPlayer.score){
+            const tiePopUp = document.createElement('h2')
+            document.body.appendChild(tiePopUp)
+            tiePopUp.innerText = 'Players Tied!!'
         }
-    }  
+    }
 }
 
 function drawPlayer() {
@@ -122,13 +141,13 @@ const animate = () =>{
                     cellsArray.splice(j, 1)
                     shotsArray.splice(i, 1)
                     game.firstPlayer.score += 1
-                    playerOneCount.innerText = game.firstPlayer.score
+                    playerOneCount.innerText = `${playerOneName}: ${game.firstPlayer.score}`
                     console.log('inside player 1 score')
                 }else if(playerTwoShot){
                     cellsArray.splice(j, 1)
                     shotsArray.splice(i, 1)
                     game.secondPlayer.score += 1
-                    playerTwoCount.innerText = game.secondPlayer.score
+                    playerTwoCount.innerText = `${playerTwoName}: ${game.secondPlayer.score}`
                     console.log('inside player 2 score')
                 }
             }
@@ -238,7 +257,7 @@ const player1KeyDownShoot = (e) => {
 }
 
 const player2KeyDownShoot = (e) => {
-    if(e.code == 'ShiftLeft'){
+    if(e.code == 'ShiftRight'){
         playerTwoShot = false;
     }
 }
@@ -257,7 +276,7 @@ class Cell {
         this.radius = 8
     }
     drawCell(){
-        ctx.fillStyle = 'red'
+        ctx.fillStyle = '#40D61A'
         ctx.beginPath()
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
         ctx.fill()
@@ -280,7 +299,7 @@ class Cell {
 //         }
 // }))
 
-setInterval(()=>{
+const cellSpawn = setInterval(()=>{
     cellsArray.push(new Cell({
         position:{
             x:Math.floor(Math.random() * canvas.width),
@@ -294,8 +313,6 @@ setInterval(()=>{
     //console.log('in interval')
     //console.log(cellsArray)
 },1000)
-
-
 
 // shotsArray.forEach(bullet =>{
 //     cellsArray.forEach(cell =>{
