@@ -1,4 +1,4 @@
-# covid-invaders
+# Covid-Invaders
 
 This is a modern take on the classic space invaders game from the 70's. Growing up I spent a lot of time in arcades and I wanted to recreate a small memory of my childhood with my own twist. This is a two player game where each player plays as a syringe that is shooting down covid cells. I created this game using HTML, CSS and JavaScript as well as Canvas API. Hope you enjoy!
 
