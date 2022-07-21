@@ -15,11 +15,11 @@ let playerTwoShot = false
 let timeCounter = 20
 
 //INTRO TO THE GAME, INSTRUCTIONS AND NAME INPUTS
-// alert("WELCOME TO COVID INVADERS")
+alert("WELCOME TO COVID INVADERS")
 const playerOneName = prompt('Player 1: enter your name.')
 const playerTwoName = prompt('Player 2: enter your name.')
-// playerOneCount.innerText = `${playerOneName}:`
-// playerTwoCount.innerText = `${playerTwoName}:`
+playerOneCount.innerText = `${playerOneName}:`
+playerTwoCount.innerText = `${playerTwoName}:`
 
 //GAME OBJECT WITH PLAYERS AND METHODS
 const game = {
@@ -174,7 +174,6 @@ const animate = () =>{
     cellsArray.forEach((cell, index) =>{
         if(cell.position.y >= 660){
             cellsArray.splice(index,1)
-            console.log('inside if statement')
         }else{
             cell.updateCell()
         }
