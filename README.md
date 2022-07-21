@@ -15,3 +15,11 @@ UPCOMING FEATURES:
 - Sound effect that starts when there is 10 seconds left to the game to notify players the round is coming to a close.
 - High score board for return players.
 - Cells that require multiple hits to take down.
+
+WIRE FRAMES:
+
+LOAD SCREEN
+<img width="947" alt="Screen Shot 2022-07-20 at 9 34 48 PM" src="https://user-images.githubusercontent.com/104473610/180110907-34b77d4e-60ba-46e8-9287-ebe2451c6b72.png">
+
+GAME PLAY SCREEN
+<img width="952" alt="Screen Shot 2022-07-20 at 9 36 35 PM" src="https://user-images.githubusercontent.com/104473610/180110911-c707c099-3cdc-45fd-a085-cf6f1e30f453.png">
