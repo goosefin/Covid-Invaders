@@ -17,8 +17,9 @@ UPCOMING FEATURES:
 - Cells that require multiple hits to take down.
 
 WIRE FRAMES:
+<img width="953" alt="Intro" src="https://user-images.githubusercontent.com/104473610/180578103-ac54f1a9-a62b-4511-9fb6-c53e38301c0e.png">
 
-LOAD SCREEN
+INSTRUCTIONS
 <img width="947" alt="Screen Shot 2022-07-20 at 9 34 48 PM" src="https://user-images.githubusercontent.com/104473610/180110907-34b77d4e-60ba-46e8-9287-ebe2451c6b72.png">
 
 GAME PLAY SCREEN
