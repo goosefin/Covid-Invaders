@@ -3,6 +3,9 @@ const player1 = document.getElementById('player-1-icon');
 const player2 = document.getElementById('player-2-icon');
 const canvas = document.getElementById('canvas');
 const popUp = document.querySelector('#pop-up')
+const titleCard = document.querySelector('#title-card')
+const playerOneName = document.querySelector('#p1')
+const playerTwoName= document.querySelector('#p2')
 const ctx = canvas.getContext('2d');
 const shotsArray = [];
 const cellsArray = []
@@ -13,13 +16,6 @@ let playerTwoCount = document.querySelector('#player-two')
 let playerOneShot = false
 let playerTwoShot = false
 let timeCounter = 20
-
-//INTRO TO THE GAME, INSTRUCTIONS AND NAME INPUTS
-alert("WELCOME TO COVID INVADERS")
-const playerOneName = prompt('Player 1: enter your name.')
-const playerTwoName = prompt('Player 2: enter your name.')
-playerOneCount.innerText = `${playerOneName}:`
-playerTwoCount.innerText = `${playerTwoName}:`
 
 //GAME OBJECT WITH PLAYERS AND METHODS
 const game = {
@@ -185,12 +181,12 @@ const animate = () =>{
                     cellsArray.splice(j, 1)
                     shotsArray.splice(i, 1)
                     game.firstPlayer.score += 1
-                    playerOneCount.innerText = `${playerOneName}: ${game.firstPlayer.score}`
+                    playerOneCount.innerText = `${playerOneName.value}: ${game.firstPlayer.score}`
                 }else if(playerTwoShot){
                     cellsArray.splice(j, 1)
                     shotsArray.splice(i, 1)
                     game.secondPlayer.score += 1
-                    playerTwoCount.innerText = `${playerTwoName}: ${game.secondPlayer.score}`
+                    playerTwoCount.innerText = `${playerTwoName.value}: ${game.secondPlayer.score}`
                 }
             }
         })
@@ -274,6 +270,19 @@ const player2Shoot = (e) => {
     }
 }
 
+const removeTitleCard = () => {
+    titleCard.style.display = 'none'
+}
+
+const removePopUp = () =>{
+    popUp.style.display = 'none'
+}
+
+const playerNames = () => {
+    playerOneCount.innerText = `${playerOneName.value}:`
+    playerTwoCount.innerText = `${playerTwoName.value}:`
+}
+
 //EVENT HANDLER LISTENING
 update()
 document.addEventListener('keydown', keyDown)
@@ -281,6 +290,8 @@ document.addEventListener('keyup', keyUp)
 document.addEventListener('keydown',player1Shoot)
 document.addEventListener('keydown',player2Shoot)
 document.getElementById('play-button').addEventListener('click', () =>{
-    popUp.style.display = 'none'
+    playerNames()
+    removePopUp()
     game.startGame()
 })
+document.getElementById('enter-button').addEventListener('click',removeTitleCard);
