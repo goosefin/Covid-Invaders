@@ -1,5 +1,31 @@
-body{
+/*body{
     background-image: url('../Images/germs.gif');
+}*/
+
+#title-card{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Nosifer', cursive;
+    color: #40D61A;
+    height: 105%;
+    width: 98%;
+    z-index: 1;
+    background-image: url('../Images/germs.gif');
+}
+
+h1{
+    font-size: 100px;
+    background-color: black;
+}
+
+#enter-button{
+    font-size: 30px;
+    font-family: 'Nosifer', cursive;
+    background-color: black;
+    color:#40D61A;
 }
 
 header{
@@ -54,7 +80,7 @@ h2{
     align-items: center;
     background-color: white;
     width: 500px;
-    z-index: 3;
+    z-index: -1;
     left: 32%;
     top: 32%;
     line-height: 1.5;
