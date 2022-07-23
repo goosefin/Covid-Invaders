@@ -43,11 +43,11 @@ const game = {
         if(this.firstPlayer.score > this.secondPlayer.score){
             const winnerPopUp = document.createElement('h2')
             document.body.appendChild(winnerPopUp)
-            winnerPopUp.innerText=`${playerOneName} wins!!`
+            winnerPopUp.innerText=`${playerOneName.value} wins!!`
         }else if(this.secondPlayer.score > this.firstPlayer.score){
             const winnerPopUp2 = document.createElement('h2')
             document.body.appendChild(winnerPopUp2)
-            winnerPopUp2.innerText=`${playerTwoName} wins`
+            winnerPopUp2.innerText=`${playerTwoName.value} wins`
         }else if(this.firstPlayer.score == this.secondPlayer.score){
             const tiePopUp = document.createElement('h2')
             document.body.appendChild(tiePopUp)
